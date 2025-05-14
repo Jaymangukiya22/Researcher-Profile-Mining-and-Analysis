@@ -1,9 +1,7 @@
 # Researcher-Profile-Mining-and-Analysis
 Deep Learning subject case study
 
-# Researcher Analysis Tool
-
-This tool automates the process of analyzing researchers' publications and research themes using Google Scholar data.
+This tool automates the process of analyzing researchers' publications and research themes using Google Scholar data. It provides comprehensive analysis of academic profiles, research areas, and publication diversity.
 
 ## Features
 
@@ -11,7 +9,8 @@ This tool automates the process of analyzing researchers' publications and resea
 - Extracts top 20 publications for each researcher
 - Generates word clouds of research themes
 - Calculates research diversity scores
-- Creates detailed Excel reports
+- Creates detailed Excel reports with multiple analysis sheets
+- Object-oriented design for better maintainability and extensibility
 
 ## Setup
 
@@ -34,27 +33,58 @@ This tool automates the process of analyzing researchers' publications and resea
 
 3. Run the analysis:
    ```bash
-   python researcher_analysis.py
+   python academic_profile_analyzer.py
    ```
 
 4. The script will generate:
-   - `researcher_analysis.xlsx`: Contains detailed analysis for each researcher
-   - Word cloud images for each researcher
-   - A summary sheet with diversity scores
+   - `academic_analysis_[timestamp].xlsx`: Contains detailed analysis for each researcher
+   - Research visualization images in the `research_visualizations` directory
+   - A comprehensive analysis with multiple sheets
 
 ## Output
 
-The `researcher_analysis.xlsx` file contains:
-- One sheet per researcher with their publications
-- A summary sheet with diversity scores
-- Each researcher's sheet includes:
-  - S.No
-  - Researcher Name
-  - Title of the Paper
-  - Abstract
+The `academic_analysis_[timestamp].xlsx` file contains three main sheets:
+
+1. **Publications Sheet**
+   - ID
+   - Scholar Name
+   - Paper Title
+   - Abstract
+
+2. **Research Areas Sheet**
+   - Scholar
+   - Key Research Areas (identified through TF-IDF analysis)
+
+3. **Diversity Analysis Sheet**
+   - Scholar
+   - Similarity Index
+   - Diversity Level (High/Medium/Low)
+
+## Research Visualizations
+
+- Word cloud images are saved in the `research_visualizations` directory
+- Each visualization is named with the scholar's name and timestamp
+- Images show the most prominent research themes and keywords
+
+## Technical Details
+
+- Uses TF-IDF vectorization for research theme identification
+- Implements sentence transformers for diversity analysis
+- Includes rate limiting and error handling for Google Scholar API
+- Object-oriented design with the `AcademicProfileAnalyzer` class
+- Automatic backup file generation if primary save fails
 
 ## Notes
 
-- The script includes delays to respect Google Scholar's rate limits
+- The script includes random delays to respect Google Scholar's rate limits
 - Some researchers might not be found or might have incomplete data
-- The script will skip researchers that can't be found and continue with others 
+- The script will skip researchers that can't be found and continue with others
+- All output files include timestamps to prevent overwriting
+- The analysis is performed using a smaller model for better performance
+
+## Error Handling
+
+- Graceful handling of API rate limits
+- Automatic retry mechanisms for failed requests
+- Backup file generation if primary save fails
+- Detailed error logging for troubleshooting 
